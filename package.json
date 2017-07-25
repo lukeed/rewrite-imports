@@ -1,0 +1,22 @@
+{
+  "name": "rewrite-imports",
+  "version": "0.0.0",
+  "repository": "lukeed/rewrite-imports",
+  "description": "",
+  "license": "MIT",
+  "author": {
+    "name": "Luke Edwards",
+    "email": "luke.edwards05@gmail.com",
+    "url": "lukeed.com"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+  ],
+  "devDependencies": {
+  }
+}
