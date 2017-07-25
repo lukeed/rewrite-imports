@@ -1,6 +1,6 @@
 {
   "name": "rewrite-imports",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "repository": "lukeed/rewrite-imports",
   "description": "Rewrite `import` statements as `require()`s; via RegExp",
   "license": "MIT",
