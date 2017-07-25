@@ -2,7 +2,7 @@
   "name": "rewrite-imports",
   "version": "0.0.0",
   "repository": "lukeed/rewrite-imports",
-  "description": "",
+  "description": "Rewrite `import` statements as `require()`s; via RegExp",
   "license": "MIT",
   "author": {
     "name": "Luke Edwards",
@@ -12,11 +12,22 @@
   "engines": {
     "node": ">=4"
   },
+  "scripts": {
+    "test": "tape test/*.js | tap-spec"
+  },
   "files": [
     "index.js"
   ],
   "keywords": [
+    "regex",
+    "rewrite",
+    "modules",
+    "imports",
+    "requires",
+    "aliases"
   ],
   "devDependencies": {
+    "tap-spec": "^4.1.1",
+    "tape": "^4.7.0"
   }
 }
