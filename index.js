@@ -2,9 +2,8 @@
 
 const basename = require('path').basename;
 
-const isPartial = /[{}]/gi;
-
-const clean = (str, val) => str.replace(val, '');
+const UNNAMED = /import ['"]([^'"]+)['"];?/gi;
+const NAMED = /import (\{?)([\s\S]*?)\}? from ['"]([^'"]+)['"];?/gi;
 
 function alias(key) {
 	key = key.trim();
@@ -14,14 +13,13 @@ function alias(key) {
 }
 
 function single(key, dep) {
-	const obj = alias(key);
-	return `const ${obj.name} = require(${dep});`;
+	return `const ${alias(key).name} = require('${dep}');`;
 }
 
 function multi(keys, dep) {
-	const tmp = clean(basename(dep), /['"]/gi).concat('$1'); // uniqueness
-	let out=single(tmp, dep), obj;
-	clean(keys, isPartial).split(',').forEach(key => {
+	const tmp = basename(dep) + '$1'; // uniqueness
+	let obj, out = single(tmp, dep);
+	keys.split(',').forEach(key => {
 		obj = alias(key);
 		out += `\nconst ${obj.name} = ${tmp}.${obj.key};`;
 	});
@@ -29,8 +27,7 @@ function multi(keys, dep) {
 }
 
 module.exports = function (str) {
-	return str.replace(/import (.*) from (.*)/gi, (_, req, dep) => {
-		dep = clean(dep, ';');
-		return isPartial.test(req) ? multi(req, dep) : single(req, dep);
-	}).replace(/import (.*)/gi, (_, dep) => `require(${clean(dep, ';')});`);
+	return str
+		.replace(NAMED, (_, bracket, req, dep) => bracket ? multi(req, dep) : single(req, dep))
+		.replace(UNNAMED, (_, dep) => `require('${dep}');`);
 }

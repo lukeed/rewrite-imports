@@ -31,27 +31,27 @@ test(`import foo from '../foo/bar';`, t => {
 // Double quotes
 
 test(`import foo from "foo"`, t => {
-	t.is(fn(`import foo from "foo"`), `const foo = require("foo");`);
+	t.is(fn(`import foo from "foo"`), `const foo = require('foo');`);
 	t.end();
 });
 
 test(`import foo from "foo";`, t => {
-	t.is(fn(`import foo from "foo";`), `const foo = require("foo");`);
+	t.is(fn(`import foo from "foo";`), `const foo = require('foo');`);
 	t.end();
 });
 
 test(`import foo from "./foo"`, t => {
-	t.is(fn(`import foo from "./foo"`), `const foo = require("./foo");`);
+	t.is(fn(`import foo from "./foo"`), `const foo = require('./foo');`);
 	t.end();
 });
 
 test(`import foo from "../foo/bar"`, t => {
-	t.is(fn(`import foo from "../foo/bar"`), `const foo = require("../foo/bar");`);
+	t.is(fn(`import foo from "../foo/bar"`), `const foo = require('../foo/bar');`);
 	t.end();
 });
 
 test(`import foo from "../foo/bar";`, t => {
-	t.is(fn(`import foo from "../foo/bar";`), `const foo = require("../foo/bar");`);
+	t.is(fn(`import foo from "../foo/bar";`), `const foo = require('../foo/bar');`);
 	t.end();
 });
 
@@ -134,22 +134,46 @@ test(`import './foo';`, t => {
 
 // Multi-line
 
-// test(`multi-line -- named`, t => {
-// 	const str = `import {
-// 		foo,
-// 		bar
-// 	} from 'baz'`;
-// 	const out = `const baz$1 = require('baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;`;
-// 	t.is(fn(str), out);
-// 	t.end();
-// });
+test(`multi-line -- named`, t => {
+	const str = `import {
+		foo,
+		bar,
+		bat as baz
+	} from 'baz'`;
+	const out = `const baz$1 = require('baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;\nconst baz = baz$1.bat;`;
+	t.is(fn(str), out);
+	t.end();
+});
 
-// test(`multi-line -- relative`, t => {
-// 	const str = `import {
-// 		foo,
-// 		bar
-// 	} from '../baz'`;
-// 	const out = `const baz$1 = require('../baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;`
-// 	t.is(fn(str), out);
-// 	t.end();
-// });
+test(`multi-line -- relative`, t => {
+	const str = `import {
+		foo,
+		bar,
+		bat as baz
+	} from '../baz'`;
+	const out = `const baz$1 = require('../baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;\nconst baz = baz$1.bat;`
+	t.is(fn(str), out);
+	t.end();
+});
+
+// Muiltiple statements
+
+test(`import foo from 'foo';import bar from 'bar';`, t => {
+	t.is(fn(`import foo from 'foo';import bar from 'bar';`), `const foo = require('foo');const bar = require('bar');`);
+	t.end();
+});
+
+test(`import foo from 'foo'\\nimport { baz1, baz2 } from 'baz'`, t => {
+	t.is(fn(`import foo from 'foo'\nimport { baz1, baz2 } from 'baz'`), `const foo = require('foo');\nconst baz$1 = require('baz');\nconst baz1 = baz$1.baz1;\nconst baz2 = baz$1.baz2;`);
+	t.end();
+});
+
+test(`import 'bar';import './foo';`, t => {
+	t.is(fn(`import 'bar';import './foo';`), `require('bar');require('./foo');`);
+	t.end();
+});
+
+test(`import './foo'\\nimport 'bar'`, t => {
+	t.is(fn(`import './foo'\nimport 'bar'`), `require('./foo');\nrequire('bar');`);
+	t.end();
+});
