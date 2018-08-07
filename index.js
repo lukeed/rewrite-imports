@@ -13,8 +13,7 @@ function alias(key) {
 }
 
 function single(key, dep) {
-	const obj = alias(key);
-	return `const ${obj.name} = require('${dep}');`;
+	return `const ${alias(key).name} = require('${dep}');`;
 }
 
 function multi(keys, dep) {
