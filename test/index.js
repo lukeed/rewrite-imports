@@ -165,3 +165,13 @@ test(`import foo from 'foo'\\nimport { baz1, baz2 } from 'baz'`, t => {
 	t.is(fn(`import foo from 'foo'\nimport { baz1, baz2 } from 'baz'`), `const foo = require('foo');\nconst baz$1 = require('baz');\nconst baz1 = baz$1.baz1;\nconst baz2 = baz$1.baz2;`);
 	t.end();
 });
+
+test(`import 'bar';import './foo';`, t => {
+	t.is(fn(`import 'bar';import './foo';`), `require('bar');require('./foo');`);
+	t.end();
+});
+
+test(`import './foo'\\nimport 'bar'`, t => {
+	t.is(fn(`import './foo'\nimport 'bar'`), `require('./foo');\nrequire('bar');`);
+	t.end();
+});
