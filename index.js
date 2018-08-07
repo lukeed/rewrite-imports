@@ -2,6 +2,9 @@
 
 const basename = require('path').basename;
 
+const UNNAMED = /import ['"]([^'"]+)['"];?/gi;
+const NAMED = /import (\{?)([\s\S]*?)\}? from ['"]([^'"]+)['"];?/gi;
+
 function alias(key) {
 	key = key.trim();
 	let name = key.split(' as ');
@@ -16,7 +19,7 @@ function single(key, dep) {
 
 function multi(keys, dep) {
 	const tmp = basename(dep) + '$1'; // uniqueness
-	let out = single(tmp, dep), obj;
+	let obj, out = single(tmp, dep);
 	keys.split(',').forEach(key => {
 		obj = alias(key);
 		out += `\nconst ${obj.name} = ${tmp}.${obj.key};`;
@@ -26,8 +29,6 @@ function multi(keys, dep) {
 
 module.exports = function (str) {
 	return str
-		.replace(/import (\{?)([\s\S]*?)\}? from ['"]([^'"]+)['"];?/gi, (_, bracket, req, dep) => {
-			return bracket ? multi(req, dep) : single(req, dep);
-		})
-		.replace(/import ['"]([^'"]+)['"];?/gi, (_, dep) => `require('${dep}');`);
+		.replace(NAMED, (_, bracket, req, dep) => bracket ? multi(req, dep) : single(req, dep))
+		.replace(UNNAMED, (_, dep) => `require('${dep}');`);
 }
