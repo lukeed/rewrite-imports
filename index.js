@@ -29,7 +29,7 @@ function multi(keys, dep) {
 }
 
 module.exports = function (str) {
-	return str.replace(/import ([\s\S]*?) from (.*)/gi, (_, req, dep) => {
+	return str.replace(/import ([\s\S]*?) from (['"][^'"]+['"]);?/gi, (_, req, dep) => {
 		dep = clean(dep, ';');
 		return isPartial.test(req) ? multi(req, dep) : single(req, dep);
 	}).replace(/import (.*)/gi, (_, dep) => `require(${clean(dep, ';')});`);

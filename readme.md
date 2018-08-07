@@ -2,7 +2,7 @@
 
 > Rewrite `import` statements as `require()`s; via RegExp
 
-Quickly transforms various `import` statments into ES5-compatible `require()` statements.
+Quickly transforms various `import` statements into ES5-compatible `require()` statements.
 
 > **Note:** This module returns a String and **does not** provide a runtime nor does it evaluate the output.
 

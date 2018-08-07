@@ -153,3 +153,15 @@ test(`multi-line -- relative`, t => {
 	t.is(fn(str), out);
 	t.end();
 });
+
+// Muiltiple statements
+
+test(`import foo from 'foo';import bar from 'bar';`, t => {
+	t.is(fn(`import foo from 'foo';import bar from 'bar';`), `const foo = require('foo');const bar = require('bar');`);
+	t.end();
+});
+
+test(`import foo from 'foo'\nimport { baz1, baz2 } from 'baz'`, t => {
+	t.is(fn(`import foo from 'foo'\nimport { baz1, baz2 } from 'baz'`), `const foo = require('foo');\nconst baz$1 = require('baz');\nconst baz1 = baz$1.baz1;\nconst baz2 = baz$1.baz2;`);
+	t.end();
+});
