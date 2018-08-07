@@ -47,8 +47,6 @@ Type: `String`
 
 An `import` statement. See [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) for valid Syntax.
 
-> :warning: **Important:** Multi-line `import` statements are _currently_ not supported!
-
 
 ## License
 
