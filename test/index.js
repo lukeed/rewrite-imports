@@ -31,27 +31,27 @@ test(`import foo from '../foo/bar';`, t => {
 // Double quotes
 
 test(`import foo from "foo"`, t => {
-	t.is(fn(`import foo from "foo"`), `const foo = require("foo");`);
+	t.is(fn(`import foo from "foo"`), `const foo = require('foo');`);
 	t.end();
 });
 
 test(`import foo from "foo";`, t => {
-	t.is(fn(`import foo from "foo";`), `const foo = require("foo");`);
+	t.is(fn(`import foo from "foo";`), `const foo = require('foo');`);
 	t.end();
 });
 
 test(`import foo from "./foo"`, t => {
-	t.is(fn(`import foo from "./foo"`), `const foo = require("./foo");`);
+	t.is(fn(`import foo from "./foo"`), `const foo = require('./foo');`);
 	t.end();
 });
 
 test(`import foo from "../foo/bar"`, t => {
-	t.is(fn(`import foo from "../foo/bar"`), `const foo = require("../foo/bar");`);
+	t.is(fn(`import foo from "../foo/bar"`), `const foo = require('../foo/bar');`);
 	t.end();
 });
 
 test(`import foo from "../foo/bar";`, t => {
-	t.is(fn(`import foo from "../foo/bar";`), `const foo = require("../foo/bar");`);
+	t.is(fn(`import foo from "../foo/bar";`), `const foo = require('../foo/bar');`);
 	t.end();
 });
 
