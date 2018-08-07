@@ -137,9 +137,10 @@ test(`import './foo';`, t => {
 test(`multi-line -- named`, t => {
 	const str = `import {
 		foo,
-		bar
+		bar,
+		bat as baz
 	} from 'baz'`;
-	const out = `const baz$1 = require('baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;`;
+	const out = `const baz$1 = require('baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;\nconst baz = baz$1.bat;`;
 	t.is(fn(str), out);
 	t.end();
 });
@@ -147,9 +148,10 @@ test(`multi-line -- named`, t => {
 test(`multi-line -- relative`, t => {
 	const str = `import {
 		foo,
-		bar
+		bar,
+		bat as baz
 	} from '../baz'`;
-	const out = `const baz$1 = require('../baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;`
+	const out = `const baz$1 = require('../baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;\nconst baz = baz$1.bat;`
 	t.is(fn(str), out);
 	t.end();
 });
