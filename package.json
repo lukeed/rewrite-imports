@@ -13,10 +13,14 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "tape test/*.js | tap-spec"
+    "test": "tape test/*.js | tap-spec",
+    "prepublishOnly": "microbundle --format cjs --no-sourcemap --no-compress"
   },
+  "main": "index.js",
+  "browser": "dist/rewrite-imports.js",
   "files": [
-    "index.js"
+    "index.js",
+    "dist"
   ],
   "keywords": [
     "regex",
@@ -27,6 +31,7 @@
     "aliases"
   ],
   "devDependencies": {
+    "microbundle": "^0.6.0",
     "tap-spec": "^4.1.1",
     "tape": "^4.7.0"
   }

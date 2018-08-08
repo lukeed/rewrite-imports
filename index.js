@@ -1,9 +1,11 @@
 'use strict';
 
-const basename = require('path').basename;
-
 const UNNAMED = /import ['"]([^'"]+)['"];?/gi;
 const NAMED = /import (\{?)([\s\S]*?)\}? from ['"]([^'"]+)['"];?/gi;
+
+function basename(path) {
+	return path.split('/').pop();
+}
 
 function alias(key) {
 	key = key.trim();
