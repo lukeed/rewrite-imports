@@ -1,5 +1,5 @@
 const test = require('tape');
-const fn = require('../');
+const fn = require('../src');
 
 // Single quotes
 
