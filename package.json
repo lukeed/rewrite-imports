@@ -1,6 +1,6 @@
 {
   "name": "rewrite-imports",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "repository": "lukeed/rewrite-imports",
   "description": "Rewrite `import` statements as `require()`s; via RegExp",
   "browser": "dist/rewrite-imports.es5.js",
