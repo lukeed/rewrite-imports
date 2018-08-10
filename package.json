@@ -15,7 +15,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "prepublishOnly": "node builder",
+    "build": "node builder",
     "test": "tape test/*.js | tap-spec"
   },
   "files": [
