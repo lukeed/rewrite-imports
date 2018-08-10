@@ -71,15 +71,25 @@ test(`import { foo, bar } from '../baz'`, t => {
 
 // No spaces
 
-test(`import {foo,bar} from 'baz'`, t => {
-	const out = `const baz$1 = require('baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;`;
-	t.is(fn(`import {foo,bar} from 'baz'`), out);
+test(`import'foo'`, t => {
+	t.is(fn(`import'foo'`), `require('foo');`);
 	t.end();
 });
 
-test(`import {foo,bar} from '../baz'`, t => {
+test(`import foo from'foo'`, t => {
+	t.is(fn(`import foo from'foo'`), `const foo = require('foo');`);
+	t.end();
+});
+
+test(`import{foo,bar}from'baz'`, t => {
+	const out = `const baz$1 = require('baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;`;
+	t.is(fn(`import{foo,bar}from'baz'`), out);
+	t.end();
+});
+
+test(`import{foo,bar}from'../baz'`, t => {
 	const out = `const baz$1 = require('../baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;`
-	t.is(fn(`import {foo,bar} from '../baz'`), out);
+	t.is(fn(`import{foo,bar}from'../baz'`), out);
 	t.end();
 });
 

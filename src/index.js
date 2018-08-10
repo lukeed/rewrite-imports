@@ -1,7 +1,7 @@
 'use strict';
 
-const UNNAMED = /import ['"]([^'"]+)['"];?/gi;
-const NAMED = /import (\{?)([\s\S]*?)\}? from ['"]([^'"]+)['"];?/gi;
+const UNNAMED = /import\s*['"]([^'"]+)['"];?/gi;
+const NAMED = /import\s*(\{?)([\s\S]*?)\}?\s*from\s*['"]([^'"]+)['"];?/gi;
 
 function basename(path) {
 	return path.split('/').pop();
