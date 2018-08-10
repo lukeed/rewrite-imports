@@ -3,10 +3,6 @@
 const UNNAMED = /import\s*['"]([^'"]+)['"];?/gi;
 const NAMED = /import\s*(\{?)([\s\S]*?)\}?\s*from\s*['"]([^'"]+)['"];?/gi;
 
-function basename(path) {
-	return path.split('/').pop();
-}
-
 function alias(key) {
 	key = key.trim();
 	let name = key.split(' as ');
@@ -19,7 +15,7 @@ function single(key, dep) {
 }
 
 function multi(keys, dep) {
-	const tmp = basename(dep).replace(/\W/g, '_') + '$1'; // uniqueness
+	let tmp = dep.split('/').pop().replace(/\W/g, '_') + '$1'; // uniqueness
 	let obj, out = single(tmp, dep);
 	keys.split(',').forEach(key => {
 		obj = alias(key);
