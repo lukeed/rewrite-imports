@@ -7,6 +7,10 @@ function basename(path) {
 	return path.split('/').pop();
 }
 
+function sanitize(path) {
+	return path.replace(/\W/g, '_');
+}
+
 function alias(key) {
 	key = key.trim();
 	let name = key.split(' as ');
@@ -19,7 +23,7 @@ function single(key, dep) {
 }
 
 function multi(keys, dep) {
-	const tmp = basename(dep) + '$1'; // uniqueness
+	const tmp = sanitize(basename(dep)) + '$1'; // uniqueness
 	let obj, out = single(tmp, dep);
 	keys.split(',').forEach(key => {
 		obj = alias(key);

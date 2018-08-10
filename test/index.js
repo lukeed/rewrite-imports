@@ -93,6 +93,19 @@ test(`import{foo,bar}from'../baz'`, t => {
 	t.end();
 });
 
+// Dashes
+
+test(`import foo from "foo-bar"`, t => {
+	t.is(fn(`import foo from "foo-bar"`), `const foo = require('foo-bar');`);
+	t.end();
+});
+
+test(`import {foo, bar} from 'foo-bar'`, t => {
+	const out = `const foo_bar$1 = require('foo-bar');\nconst foo = foo_bar$1.foo;\nconst bar = foo_bar$1.bar;`
+	t.is(fn(`import {foo, bar} from 'foo-bar'`), out);
+	t.end();
+});
+
 // Aliases
 
 test(`import { default as main } from 'foo'`, t => {
