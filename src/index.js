@@ -1,7 +1,7 @@
 'use strict';
 
 const UNNAMED = /import\s*['"]([^'"]+)['"];?/gi;
-const NAMED = /import\s*(\{?)([\s\S]*?)\}?\s*from\s*['"]([^'"]+)['"];?/gi;
+const NAMED = /import\s*([^,{]*?)\s*,?\s*(?:\{([\s\S]*?)\})?\s*from\s*['"]([^'"]+)['"];?/gi;
 
 function alias(key) {
 	key = key.trim();
@@ -14,18 +14,18 @@ function single(key, dep) {
 	return `const ${alias(key).name} = require('${dep}');`;
 }
 
-function multi(keys, dep) {
-	let tmp = dep.split('/').pop().replace(/\W/g, '_') + '$1'; // uniqueness
-	let obj, out = single(tmp, dep);
+function multi(keys, dep, base) {
+	base = base || dep.split('/').pop().replace(/\W/g, '_') + '$1'; // uniqueness
+	let obj, out = single(base, dep);
 	keys.split(',').forEach(key => {
 		obj = alias(key);
-		out += `\nconst ${obj.name} = ${tmp}.${obj.key};`;
+		out += `\nconst ${obj.name} = ${base}.${obj.key};`;
 	});
 	return out;
 }
 
 module.exports = function (str) {
 	return str
-		.replace(NAMED, (_, bracket, req, dep) => bracket ? multi(req, dep) : single(req, dep))
+		.replace(NAMED, (_, base, req, dep) => req ? multi(req, dep, base) : single(base, dep))
 		.replace(UNNAMED, (_, dep) => `require('${dep}');`);
 }

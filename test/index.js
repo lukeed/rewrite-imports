@@ -69,6 +69,20 @@ test(`import { foo, bar } from '../baz'`, t => {
 	t.end();
 });
 
+// Mixed Imports
+
+test(`import baz, { foo, bar } from 'baz'`, t => {
+	const out = `const baz = require('baz');\nconst foo = baz.foo;\nconst bar = baz.bar;`;
+	t.is(fn(`import baz, { foo, bar } from 'baz'`), out);
+	t.end();
+});
+
+test(`import baz, { foo, bar } from '../baz'`, t => {
+	const out = `const baz = require('../baz');\nconst foo = baz.foo;\nconst bar = baz.bar;`;
+	t.is(fn(`import baz, { foo, bar } from '../baz'`), out);
+	t.end();
+});
+
 // No spaces
 
 test(`import'foo'`, t => {
