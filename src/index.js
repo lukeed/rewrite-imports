@@ -15,7 +15,7 @@ function single(key, dep) {
 }
 
 function multi(keys, dep, base) {
-	base = base || dep.split('/').pop().replace(/\W/g, '_') + '$1'; // uniqueness
+	base = base || dep.split('/').pop().replace(/\W/g, '_') + '$' + NAMED.num++; // uniqueness
 	let obj, out = single(base, dep);
 	keys.split(',').forEach(key => {
 		obj = alias(key);
@@ -25,6 +25,7 @@ function multi(keys, dep, base) {
 }
 
 module.exports = function (str) {
+	NAMED.num = 0;
 	return str
 		.replace(NAMED, (_, base, req, dep) => req ? multi(req, dep, base) : single(base, dep))
 		.replace(UNNAMED, (_, dep) => `require('${dep}');`);
