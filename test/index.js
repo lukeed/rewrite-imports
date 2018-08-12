@@ -58,13 +58,13 @@ test(`import foo from "../foo/bar";`, t => {
 // Partial Imports
 
 test(`import { foo, bar } from 'baz'`, t => {
-	const out = `const baz$1 = require('baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;`;
+	const out = `const baz$0 = require('baz');\nconst foo = baz$0.foo;\nconst bar = baz$0.bar;`;
 	t.is(fn(`import { foo, bar } from 'baz'`), out);
 	t.end();
 });
 
 test(`import { foo, bar } from '../baz'`, t => {
-	const out = `const baz$1 = require('../baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;`
+	const out = `const baz$0 = require('../baz');\nconst foo = baz$0.foo;\nconst bar = baz$0.bar;`
 	t.is(fn(`import { foo, bar } from '../baz'`), out);
 	t.end();
 });
@@ -114,13 +114,13 @@ test(`import foo from'foo'`, t => {
 });
 
 test(`import{foo,bar}from'baz'`, t => {
-	const out = `const baz$1 = require('baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;`;
+	const out = `const baz$0 = require('baz');\nconst foo = baz$0.foo;\nconst bar = baz$0.bar;`;
 	t.is(fn(`import{foo,bar}from'baz'`), out);
 	t.end();
 });
 
 test(`import{foo,bar}from'../baz'`, t => {
-	const out = `const baz$1 = require('../baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;`
+	const out = `const baz$0 = require('../baz');\nconst foo = baz$0.foo;\nconst bar = baz$0.bar;`
 	t.is(fn(`import{foo,bar}from'../baz'`), out);
 	t.end();
 });
@@ -133,7 +133,7 @@ test(`import foo from "foo-bar"`, t => {
 });
 
 test(`import {foo, bar} from 'foo-bar'`, t => {
-	const out = `const foo_bar$1 = require('foo-bar');\nconst foo = foo_bar$1.foo;\nconst bar = foo_bar$1.bar;`
+	const out = `const foo_bar$0 = require('foo-bar');\nconst foo = foo_bar$0.foo;\nconst bar = foo_bar$0.bar;`
 	t.is(fn(`import {foo, bar} from 'foo-bar'`), out);
 	t.end();
 });
@@ -141,29 +141,29 @@ test(`import {foo, bar} from 'foo-bar'`, t => {
 // Aliases
 
 test(`import { default as main } from 'foo'`, t => {
-	t.is(fn(`import { default as main } from 'foo'`), `const foo$1 = require('foo');\nconst main = foo$1.default;`);
+	t.is(fn(`import { default as main } from 'foo'`), `const foo$0 = require('foo');\nconst main = foo$0.default;`);
 	t.end();
 });
 
 test(`import { foo as bar } from 'baz'`, t => {
-	t.is(fn(`import { foo as bar } from 'baz'`), `const baz$1 = require('baz');\nconst bar = baz$1.foo;`);
+	t.is(fn(`import { foo as bar } from 'baz'`), `const baz$0 = require('baz');\nconst bar = baz$0.foo;`);
 	t.end();
 });
 
 test(`import { bar, default as main } from '../foo'`, t => {
-	const out = `const foo$1 = require('../foo');\nconst bar = foo$1.bar;\nconst main = foo$1.default;`
+	const out = `const foo$0 = require('../foo');\nconst bar = foo$0.bar;\nconst main = foo$0.default;`
 	t.is(fn(`import { bar, default as main } from '../foo'`), out);
 	t.end();
 });
 
 test(`import { foo as bar, default as main } from '../foo'`, t => {
-	const out = `const foo$1 = require('../foo');\nconst bar = foo$1.foo;\nconst main = foo$1.default;`
+	const out = `const foo$0 = require('../foo');\nconst bar = foo$0.foo;\nconst main = foo$0.default;`
 	t.is(fn(`import { foo as bar, default as main } from '../foo'`), out);
 	t.end();
 });
 
 test(`import {foo as bar, default as main} from '../foo'`, t => {
-	const out = `const foo$1 = require('../foo');\nconst bar = foo$1.foo;\nconst main = foo$1.default;`
+	const out = `const foo$0 = require('../foo');\nconst bar = foo$0.foo;\nconst main = foo$0.default;`
 	t.is(fn(`import {foo as bar, default as main} from '../foo'`), out);
 	t.end();
 });
@@ -195,7 +195,7 @@ test(`multi-line -- named`, t => {
 		bar,
 		bat as baz
 	} from 'baz'`;
-	const out = `const baz$1 = require('baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;\nconst baz = baz$1.bat;`;
+	const out = `const baz$0 = require('baz');\nconst foo = baz$0.foo;\nconst bar = baz$0.bar;\nconst baz = baz$0.bat;`;
 	t.is(fn(str), out);
 	t.end();
 });
@@ -206,7 +206,7 @@ test(`multi-line -- relative`, t => {
 		bar,
 		bat as baz
 	} from '../baz'`;
-	const out = `const baz$1 = require('../baz');\nconst foo = baz$1.foo;\nconst bar = baz$1.bar;\nconst baz = baz$1.bat;`
+	const out = `const baz$0 = require('../baz');\nconst foo = baz$0.foo;\nconst bar = baz$0.bar;\nconst baz = baz$0.bat;`
 	t.is(fn(str), out);
 	t.end();
 });
@@ -219,7 +219,7 @@ test(`import foo from 'foo';import bar from 'bar';`, t => {
 });
 
 test(`import foo from 'foo'\\nimport { baz1, baz2 } from 'baz'`, t => {
-	t.is(fn(`import foo from 'foo'\nimport { baz1, baz2 } from 'baz'`), `const foo = require('foo');\nconst baz$1 = require('baz');\nconst baz1 = baz$1.baz1;\nconst baz2 = baz$1.baz2;`);
+	t.is(fn(`import foo from 'foo'\nimport { baz1, baz2 } from 'baz'`), `const foo = require('foo');\nconst baz$0 = require('baz');\nconst baz1 = baz$0.baz1;\nconst baz2 = baz$0.baz2;`);
 	t.end();
 });
 
