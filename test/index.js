@@ -89,21 +89,15 @@ test(`import baz, { foo } from 'baz';import bat, { foo as bar } from 'bat';`, t 
 	t.end();
 });
 
-test(`import { foo }, baz from '../baz'`, t => {
-	const out = `const baz = require('../baz');\nconst foo = baz.foo;`;
-	t.is(fn(`import { foo }, baz from '../baz'`), out);
-	t.end();
-});
-
-test(`import { foo as bar, bar as bat }, baz from 'baz'`, t => {
+test(`import baz, { foo as bar, bar as bat } from 'baz'`, t => {
 	const out = `const baz = require('baz');\nconst bar = baz.foo;\nconst bat = baz.bar;`;
-	t.is(fn(`import { foo as bar, bar as bat }, baz from 'baz'`), out);
+	t.is(fn(`import baz, { foo as bar, bar as bat } from 'baz'`), out);
 	t.end();
 });
 
-test(`import baz,{foo as bar} from 'baz'; import{foo as bat},quz from 'quz';`, t => {
-	const out = `const baz = require('baz');\nconst bar = baz.foo;\ncontst quz = require('quz');\nconst bat = quz.foo;`;
-	t.is(fn(`import baz,{foo as bar}from 'baz';import{bar,foo as bat},quz from 'quz';`), out);
+test(`import baz,{foo as bar} from 'baz';import quz,{foo as bat}from'quz';`, t => {
+	const out = `const baz = require('baz');\nconst bar = baz.foo;const quz = require('quz');\nconst bat = quz.foo;`;
+	t.is(fn(`import baz,{foo as bar} from 'baz';import quz,{foo as bat}from'quz';`), out);
 	t.end();
 });
 
