@@ -232,3 +232,23 @@ test(`import './foo'\\nimport 'bar'`, t => {
 	t.is(fn(`import './foo'\nimport 'bar'`), `require('./foo');\nrequire('bar');`);
 	t.end();
 });
+
+// Ensure Uniqueness
+
+test(`import { promisify } from 'util';import { foo as bar } from './util';`, t => {
+	const out = `const util$0 = require('util');\nconst promisify = util$0.promisify;const util$1 = require('./util');\nconst bar = util$1.foo;`;
+	t.is(fn(`import { promisify } from 'util';import { foo as bar } from './util';`), out);
+	t.end();
+});
+
+test(`import util, { promisify } from 'util';import { foo as bar } from './util';`, t => {
+	const out = `const util = require('util');\nconst promisify = util.promisify;const util$0 = require('./util');\nconst bar = util$0.foo;`;
+	t.is(fn(`import util, { promisify } from 'util';import { foo as bar } from './util';`), out);
+	t.end();
+});
+
+test(`import { h } from 'preact';import { Component } from 'preact';`, t => {
+	const out = `const preact$0 = require('preact');\nconst h = preact$0.h;const preact$1 = require('preact');\nconst Component = preact$1.Component;`;
+	t.is(fn(`import { h } from 'preact';import { Component } from 'preact';`), out);
+	t.end();
+});
