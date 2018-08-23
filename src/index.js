@@ -7,18 +7,24 @@ function alias(key) {
 	key = key.trim();
 	let name = key.split(' as ');
 	(name.length > 1) && (key=name.shift());
-	return { key, name:name[0] };
+	return { key, name: name[0] };
 }
 
-function single(key, dep) {
-	return `const ${alias(key).name} = require('${dep}');`;
-}
+function generate(keys, dep, base) {
+	let obj, out = '',
+		tmp = base || (dep.split('/').pop().replace(/\W/g, '_') + '$' + num++); // uniqueness
 
-function multi(keys, dep, base) {
-	let obj,
-		tmp = (base || dep.split('/').pop().replace(/\W/g, '_')) + '$' + num++, // uniqueness
-		out = single(tmp, dep);
-	if (base) out += `\nconst ${base} = ${tmp}.default || ${tmp};`;
+	if (base) {
+		if (!hasInterop) {
+			out = `function ri$interop(m) { return m.default || m }\n`;
+			hasInterop = true;
+		}
+		out += `const ${base} = ri$interop(require('${dep}'));`;
+	}
+	else {
+		out += `const ${alias(tmp).name} = require('${dep}');`;
+	}
+
 	keys.forEach(key => {
 		obj = alias(key);
 		out += `\nconst ${obj.name} = ${tmp}.${obj.key};`;
@@ -26,10 +32,11 @@ function multi(keys, dep, base) {
 	return out;
 }
 
-let num;
+let num, hasInterop;
 module.exports = function (str) {
 	num = 0;
+	hasInterop = false;
 	return str
-		.replace(NAMED, (_, asterisk, base, req, dep) => multi(req ? req.split(',') : [], dep, base))
+		.replace(NAMED, (_, asterisk, base, req, dep) => generate(req ? req.split(',') : [], dep, base))
 		.replace(UNNAMED, (_, dep) => `require('${dep}');`);
 }
