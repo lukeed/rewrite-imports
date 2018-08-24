@@ -5,54 +5,54 @@ const fn = require('../src');
 	// Single quotes
 	[
 		`import foo from 'foo'`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const foo = ri$interop(require('foo'));`
 	],
 	[
 		`import foo from 'foo';`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const foo = ri$interop(require('foo'));`
 	],
 	[
 		`import foo from './foo'`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const foo = ri$interop(require('./foo'));`
 	],
 	[
 		`import foo from '../foo/bar'`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const foo = ri$interop(require('../foo/bar'));`
 	],
 	[
 		`import foo from '../foo/bar';`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const foo = ri$interop(require('../foo/bar'));`
 	],
 
 	// Double quotes
 	[
 		`import foo from "foo"`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const foo = ri$interop(require('foo'));`
 	],
 	[
 		`import foo from "foo";`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const foo = ri$interop(require('foo'));`
 	],
 	[
 		`import foo from "./foo"`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const foo = ri$interop(require('./foo'));`
 	],
 	[
 		`import foo from "../foo/bar"`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const foo = ri$interop(require('../foo/bar'));`
 	],
 	[
 		`import foo from "../foo/bar";`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const foo = ri$interop(require('../foo/bar'));`
 	],
 
@@ -73,35 +73,35 @@ const bar = baz$0.bar;`
 	// Mixed Imports
 	[
 		`import baz, { foo, bar } from 'baz'`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const baz = ri$interop(require('baz'));
 const foo = baz.foo;
 const bar = baz.bar;`
 	],
 	[
 		`import baz, { foo, bar } from '../baz'`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const baz = ri$interop(require('../baz'));
 const foo = baz.foo;
 const bar = baz.bar;`
 	],
 	[
 		`import baz, { foo } from 'baz';import bat, { foo as bar } from 'bat';`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const baz = ri$interop(require('baz'));
 const foo = baz.foo;const bat = ri$interop(require('bat'));
 const bar = bat.foo;`
 	],
 	[
 		`import baz, { foo as bar, bar as bat } from 'baz'`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const baz = ri$interop(require('baz'));
 const bar = baz.foo;
 const bat = baz.bar;`
 	],
 	[
 		`import baz, {foo as bar} from 'baz';import quz, {foo as bat} from 'quz';`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const baz = ri$interop(require('baz'));
 const bar = baz.foo;const quz = ri$interop(require('quz'));
 const bat = quz.foo;`
@@ -132,14 +132,14 @@ const main = foo$0.default;`
 	],
 	[
 		`import baz, { foo as bar, default as main } from '../foo'`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const baz = ri$interop(require('../foo'));
 const bar = baz.foo;
 const main = baz.default;`
 	],
 	[
 		`import * as foo from '../foo'`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const foo = ri$interop(require('../foo'));`
 	],
 
@@ -180,12 +180,12 @@ const baz = baz$0.bat;`
 	// Muiltiple statements
 	[
 		`import foo from 'foo';import bar from 'bar';`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const foo = ri$interop(require('foo'));const bar = ri$interop(require('bar'));`
 	],
 	[
 		`import foo from 'foo'\nimport { baz1, baz2 } from 'baz'`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const foo = ri$interop(require('foo'));
 const baz$0 = require('baz');
 const baz1 = baz$0.baz1;
@@ -211,7 +211,7 @@ const bar = util$1.foo;`
 	],
 	[
 		`import util, { promisify } from 'util';import { foo as bar } from './util';`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const util = ri$interop(require('util'));
 const promisify = util.promisify;const util$0 = require('./util');
 const bar = util$0.foo;`
@@ -230,7 +230,7 @@ const Component = preact$1.Component;`
 	],
 	[
 		`import foo from'foo'`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const foo = ri$interop(require('foo'));`
 	],
 	[
@@ -255,7 +255,7 @@ const baz = baz$0.bar;`
 	// Dashes
 	[
 		`import foo from "foo-bar"`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const foo = ri$interop(require('foo-bar'));`
 	],
 	[
@@ -266,7 +266,7 @@ const bar = foo_bar$0.bar;`
 	],
 	[
 		`import baz, {foo, bar} from 'foo-bar'`,
-		`function ri$interop(m) { return m.default || m }
+		`function ri$interop(m){return m.default||m}
 const baz = ri$interop(require('foo-bar'));
 const foo = baz.foo;
 const bar = baz.bar;`
