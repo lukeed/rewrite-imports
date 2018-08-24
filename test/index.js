@@ -271,7 +271,10 @@ const baz = ri$interop(require('foo-bar'));
 const foo = baz.foo;
 const bar = baz.bar;`
 	],
-].forEach(([code, expected]) => {
+].forEach(arr => {
+	let code = arr[0];
+	let expected = arr[1];
+
 	test(code, t => {
 		const result = fn(code);
 		t.doesNotThrow(() => new Function(result), SyntaxError);
