@@ -1,12 +1,16 @@
 # rewrite-imports [![Build Status](https://travis-ci.org/lukeed/rewrite-imports.svg?branch=master)](https://travis-ci.org/lukeed/rewrite-imports)
 
-> Rewrite `import` statements as `require()`s; via RegExp
+Transforms various `import` statements into ES5-compatible `require()` calls, using regular expressions.
 
-Quickly transforms various `import` statements into ES5-compatible `require()` statements.
+## Caveats
 
-> **Note:** This module returns a String and **does not** provide a runtime nor does it evaluate the output.
+* Returns a string and **does not** provide a runtime nor does it evaluate the output.
 
-> :bulb: For this behavior, visit [`rewrite-module`](https://github.com/lukeed/rewrite-module) or check out [`@taskr/esnext`](https://github.com/lukeed/taskr/tree/master/packages/esnext) for an example!
+  > :bulb: For this behavior, use [`rewrite-module`](https://github.com/lukeed/rewrite-module) or check out [`@taskr/esnext`](https://github.com/lukeed/taskr/tree/master/packages/esnext) for an example.
+
+* Have [false positives](https://github.com/lukeed/rewrite-imports/issues/8), you may want to use an AST to find actual `import` statements before transformation.
+
+  > :bulb: Check out an [example implementation](https://github.com/styleguidist/react-styleguidist/blob/82f22d217044dee6215e60696c39791ee168fc14/src/client/utils/transpileImports.js).
 
 ## Install
 
