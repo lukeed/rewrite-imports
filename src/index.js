@@ -28,8 +28,9 @@ function generate(keys, dep, base, fn) {
 }
 
 let num;
-module.exports = function (str, fn = 'require') {
+module.exports = function (str, fn) {
 	num = 0;
+	fn = fn || 'require';
 	return str
 		.replace(NAMED, (_, asterisk, base, req, dep) => generate(req ? req.split(',') : [], dep, base, fn))
 		.replace(UNNAMED, (_, dep) => `${fn}('${dep}');`);
