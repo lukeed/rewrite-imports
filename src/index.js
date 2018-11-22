@@ -2,7 +2,6 @@
 
 const UNNAMED = /import\s*['"]([^'"]+)['"];?/gi;
 const NAMED = /import\s*(\*\s*as)?\s*(\w*?)\s*,?\s*(?:\{([\s\S]*?)\})?\s*from\s*['"]([^'"]+)['"];?/gi;
-const interop = `function ri$interop(m){return m.default||m}\n`;
 
 function alias(key) {
 	key = key.trim();
@@ -11,18 +10,14 @@ function alias(key) {
 	return { key, name: name[0] };
 }
 
-function generate(keys, dep, base) {
+function generate(keys, dep, base, fn) {
 	let tmp = base || (dep.split('/').pop().replace(/\W/g, '_') + '$' + num++); // uniqueness
 	let name = base || alias(tmp).name;
 
 	let obj, out='';
-	if (base && !hasInterop) {
-		hasInterop = true;
-		out += interop;
-	}
 
-	dep = `require('${dep}')`;
-	out += `const ${name} = ` + (base ? `ri$interop(${dep})` : dep) + ';';
+	dep = `${fn}('${dep}')`;
+	out += `const ${name} = ${dep};`;
 
 	keys.forEach(key => {
 		obj = alias(key);
@@ -32,10 +27,10 @@ function generate(keys, dep, base) {
 	return out;
 }
 
-let num, hasInterop;
-module.exports = function (str) {
-	num = hasInterop = 0;
+let num;
+module.exports = function (str, fn = 'require') {
+	num = 0;
 	return str
-		.replace(NAMED, (_, asterisk, base, req, dep) => generate(req ? req.split(',') : [], dep, base))
-		.replace(UNNAMED, (_, dep) => `require('${dep}');`);
+		.replace(NAMED, (_, asterisk, base, req, dep) => generate(req ? req.split(',') : [], dep, base, fn))
+		.replace(UNNAMED, (_, dep) => `${fn}('${dep}');`);
 }
