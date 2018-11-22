@@ -11,8 +11,8 @@ function alias(key) {
 }
 
 function generate(keys, dep, base, fn) {
-	let tmp = base || (dep.split('/').pop().replace(/\W/g, '_') + '$' + num++); // uniqueness
-	let name = base || alias(tmp).name;
+	const tmp = base || (dep.split('/').pop().replace(/\W/g, '_') + '$' + num++); // uniqueness
+	const name = base || alias(tmp).name;
 
 	dep = `${fn}('${dep}')`;
 
