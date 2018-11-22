@@ -14,10 +14,10 @@ function generate(keys, dep, base, fn) {
 	let tmp = base || (dep.split('/').pop().replace(/\W/g, '_') + '$' + num++); // uniqueness
 	let name = base || alias(tmp).name;
 
-	let obj, out='';
-
 	dep = `${fn}('${dep}')`;
-	out += `const ${name} = ${dep};`;
+
+	let obj;
+	let out = `const ${name} = ${dep};`;
 
 	keys.forEach(key => {
 		obj = alias(key);
