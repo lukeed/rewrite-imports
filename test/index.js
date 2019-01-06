@@ -51,77 +51,63 @@ const fn = require('../src');
 	// Partial Imports
 	[
 		`import { foo, bar } from 'baz'`,
-		`const baz$0 = require('baz');
-const foo = baz$0.foo;
-const bar = baz$0.bar;`
+		`const { foo, bar } = require('baz');`
 	],
 	[
 		`import { foo, bar } from '../baz'`,
-		`const baz$0 = require('../baz');
-const foo = baz$0.foo;
-const bar = baz$0.bar;`
+		`const { foo, bar } = require('../baz');`
 	],
 
 	// Mixed Imports
 	[
 		`import baz, { foo, bar } from 'baz'`,
 		`const baz = require('baz');
-const foo = baz.foo;
-const bar = baz.bar;`
+const { foo, bar } = baz;`
 	],
 	[
 		`import baz, { foo, bar } from '../baz'`,
 		`const baz = require('../baz');
-const foo = baz.foo;
-const bar = baz.bar;`
+const { foo, bar } = baz;`
 	],
 	[
 		`import baz, { foo } from 'baz';import bat, { foo as bar } from 'bat';`,
 		`const baz = require('baz');
-const foo = baz.foo;const bat = require('bat');
-const bar = bat.foo;`
+const { foo } = baz;const bat = require('bat');
+const { foo:bar } = bat;`
 	],
 	[
 		`import baz, { foo as bar, bar as bat } from 'baz'`,
 		`const baz = require('baz');
-const bar = baz.foo;
-const bat = baz.bar;`
+const { foo:bar, bar:bat } = baz;`
 	],
 	[
 		`import baz, {foo as bar} from 'baz';import quz, {foo as bat} from 'quz';`,
 		`const baz = require('baz');
-const bar = baz.foo;const quz = require('quz');
-const bat = quz.foo;`
+const { foo:bar } = baz;const quz = require('quz');
+const { foo:bat } = quz;`
 	],
 
 	// Aliases
 	[
 		`import { default as main } from 'foo'`,
-		`const foo$0 = require('foo');
-const main = foo$0.default;`
+		`const { default:main } = require('foo');`
 	],
 	[
 		`import { foo as bar } from 'baz'`,
-		`const baz$0 = require('baz');
-const bar = baz$0.foo;`
+		`const { foo:bar } = require('baz');`
 	],
 	[
 		`import { bar, default as main } from '../foo'`,
-		`const foo$0 = require('../foo');
-const bar = foo$0.bar;
-const main = foo$0.default;`
+		`const { bar, default:main } = require('../foo');`
 	],
 	[
 		`import { foo as bar, default as main } from '../foo'`,
-		`const foo$0 = require('../foo');
-const bar = foo$0.foo;
-const main = foo$0.default;`
+		`const { foo:bar, default:main } = require('../foo');`
 	],
 	[
 		`import baz, { foo as bar, default as main } from '../foo'`,
 		`const baz = require('../foo');
-const bar = baz.foo;
-const main = baz.default;`
+const { foo:bar, default:main } = baz;`
 	],
 	[
 		`import * as foo from '../foo'`,
@@ -145,10 +131,7 @@ const main = baz.default;`
 	bar,
 	bat as baz
 } from 'baz'`,
-		`const baz$0 = require('baz');
-const foo = baz$0.foo;
-const bar = baz$0.bar;
-const baz = baz$0.bat;`
+		`const { foo, bar, bat:baz } = require('baz');`
 	],
 	[
 		`import {
@@ -156,10 +139,7 @@ const baz = baz$0.bat;`
 	bar,
 	bat as baz
 } from '../baz'`,
-		`const baz$0 = require('../baz');
-const foo = baz$0.foo;
-const bar = baz$0.bar;
-const baz = baz$0.bat;`
+		`const { foo, bar, bat:baz } = require('../baz');`
 	],
 
 	// Muiltiple statements
@@ -169,10 +149,7 @@ const baz = baz$0.bat;`
 	],
 	[
 		`import foo from 'foo'\nimport { baz1, baz2 } from 'baz'`,
-		`const foo = require('foo');
-const baz$0 = require('baz');
-const baz1 = baz$0.baz1;
-const baz2 = baz$0.baz2;`
+		`const foo = require('foo');\nconst { baz1, baz2 } = require('baz');`
 	],
 	[
 		`import 'bar';import './foo';`,
@@ -188,21 +165,17 @@ require('bar');`
 	// Ensure Uniqueness
 	[
 		`import { promisify } from 'util';import { foo as bar } from './util';`,
-		`const util$0 = require('util');
-const promisify = util$0.promisify;const util$1 = require('./util');
-const bar = util$1.foo;`
+		`const { promisify } = require('util');const { foo:bar } = require('./util');`
 	],
 	[
-		`import util, { promisify } from 'util';import { foo as bar } from './util';`,
+		`import util, { promisify } from 'util';import helpers, { foo as bar } from './util';`,
 		`const util = require('util');
-const promisify = util.promisify;const util$0 = require('./util');
-const bar = util$0.foo;`
+const { promisify } = util;const helpers = require('./util');
+const { foo:bar } = helpers;`
 	],
 	[
 		`import { h } from 'preact';import { Component } from 'preact';`,
-		`const preact$0 = require('preact');
-const h = preact$0.h;const preact$1 = require('preact');
-const Component = preact$1.Component;`
+		`const { h } = require('preact');const { Component } = require('preact');`
 	],
 
 	// No spaces
@@ -216,21 +189,15 @@ const Component = preact$1.Component;`
 	],
 	[
 		`import{foo,bar}from'baz'`,
-		`const baz$0 = require('baz');
-const foo = baz$0.foo;
-const bar = baz$0.bar;`
+		`const { foo, bar } = require('baz');`
 	],
 	[
 		`import{foo,bar}from'../baz'`,
-		`const baz$0 = require('../baz');
-const foo = baz$0.foo;
-const bar = baz$0.bar;`
+		`const { foo, bar } = require('../baz');`
 	],
 	[
 		`import{foo,bar as baz}from'../baz'`,
-		`const baz$0 = require('../baz');
-const foo = baz$0.foo;
-const baz = baz$0.bar;`
+		`const { foo, bar:baz } = require('../baz');`
 	],
 
 	// Dashes
@@ -240,20 +207,15 @@ const baz = baz$0.bar;`
 	],
 	[
 		`import {foo, bar} from 'foo-bar'`,
-		`const foo_bar$0 = require('foo-bar');
-const foo = foo_bar$0.foo;
-const bar = foo_bar$0.bar;`
+		`const { foo, bar } = require('foo-bar');`
 	],
 	[
 		`import baz, {foo, bar} from 'foo-bar'`,
-		`const baz = require('foo-bar');
-const foo = baz.foo;
-const bar = baz.bar;`
+		`const baz = require('foo-bar');\nconst { foo, bar } = baz;`
 	],
 	[
 		`import a, {b} from 'c'`,
-		`const a = pizza('c');
-const b = a.b;`,
+		`const a = pizza('c');\nconst { b } = a;`,
 		'pizza'
 	],
 ].forEach(arr => {
@@ -267,4 +229,4 @@ const b = a.b;`,
 		t.is(result, expected);
 		t.end();
 	})
-})
+});
