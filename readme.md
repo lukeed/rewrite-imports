@@ -2,6 +2,9 @@
 
 Transforms various `import` statements into `require()` calls, using regular expressions.
 
+> ***Looking for something _more_ backwards compatible?*** <br>
+> Check out [`v1.4.0`](https://github.com/lukeed/rewrite-imports/tree/v1.4.0) which does not rely on destructured assignment!
+
 
 ## Caveats
 
