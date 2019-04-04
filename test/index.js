@@ -117,11 +117,15 @@ const { foo:bar, default:main } = baz;`
 	// Raw imports
 	[
 		`import 'bar'`,
-		`require('bar');`
+		`require('bar')`
 	],
 	[
 		`import './foo';`,
 		`require('./foo');`
+	],
+	[
+		`import './foo';import 'bar';`,
+		`require('./foo');require('bar');`
 	],
 
 	// Multi-line
@@ -156,10 +160,8 @@ const { foo:bar, default:main } = baz;`
 		`require('bar');require('./foo');`
 	],
 	[
-		`import './foo'
-import 'bar'`,
-		`require('./foo');
-require('bar');`
+		`import './foo'\n\nimport 'bar'`,
+		`require('./foo')\n\nrequire('bar')`
 	],
 
 	// Ensure Uniqueness
@@ -181,7 +183,11 @@ const { foo:bar } = helpers;`
 	// No spaces
 	[
 		`import'foo'`,
-		`require('foo');`
+		`require('foo')`
+	],
+	[
+		`import'foo';import'./bar';import baz from'baz';`,
+		`require('foo');require('./bar');const baz = require('baz');`
 	],
 	[
 		`import foo from'foo'`,
@@ -217,6 +223,36 @@ const { foo:bar } = helpers;`
 		`import a, {b} from 'c'`,
 		`const a = pizza('c');\nconst { b } = a;`,
 		'pizza'
+	],
+
+	// No-partial/mid selection
+	[
+		`import '$dimport';`,
+		`require('$dimport');`
+	],
+	[
+		`import 'dimport';`,
+		`require('dimport');`
+	],
+	[
+		`import foo from 'dimport';`,
+		`const foo = require('dimport');`
+	],
+	[
+		`import fooimportbar from '$import$';`,
+		`const fooimportbar = require('$import$');`
+	],
+	[
+		`import dimport,{foo}from'dimport';import bat,{foo as bar}from'bat';`,
+		`const dimport = require('dimport');\nconst { foo } = dimport;const bat = require('bat');\nconst { foo:bar } = bat;`
+	],
+	[
+		`import dimport, { foo } from 'dimport'; import bat, { foo as bar } from 'bat';`,
+		`const dimport = require('dimport');\nconst { foo } = dimport; const bat = require('bat');\nconst { foo:bar } = bat;`
+	],
+	[
+		`import { dimport } from 'dimport'; import './foo';`,
+		`const { dimport } = require('dimport'); require('./foo');`,
 	],
 ].forEach(arr => {
 	let code = arr[0];
