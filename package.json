@@ -16,7 +16,7 @@
     "node": ">=6"
   },
   "scripts": {
-    "build": "node builder",
+    "build": "bundt",
     "test": "tape test/*.js | tap-spec"
   },
   "files": [
@@ -31,8 +31,7 @@
     "aliases"
   ],
   "devDependencies": {
-    "buble": "^0.19.3",
-    "mk-dirs": "^1.0.0",
+    "bundt": "^0.3.0",
     "tap-spec": "^4.1.1",
     "tape": "^4.7.0"
   }
