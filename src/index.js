@@ -1,7 +1,7 @@
 'use strict';
 
-var UNNAMED = /import\s*['"]([^'"]+)['"];?/gi;
-var NAMED = /import\s*(\*\s*as)?\s*(\w*?)\s*,?\s*(?:\{([\s\S]*?)\})?\s*from\s*['"]([^'"]+)['"];?/gi;
+var UNNAMED = /(^|;|\s+)import\s*['"]([^'"]+)['"](?=($|;|\s))/gi;
+var NAMED = /(^|[;\s]+)?import\s*(\*\s*as)?\s*(\w*?)\s*,?\s*(?:\{([\s\S]*?)\})?\s*from\s*['"]([^'"]+)['"];?/gi;
 
 function destruct(keys, target) {
 	var out=[];
@@ -18,10 +18,8 @@ function generate(keys, dep, base, fn) {
 export default function (str, fn) {
 	fn = fn || 'require';
 	return str
-		.replace(NAMED, function (x, asterisk, base, req, dep) {
-			return generate(req ? req.split(',') : [], dep, base, fn);
-		})
-		.replace(UNNAMED, function (x, dep) {
-			return (fn + "('" + dep + "');");
+		.replace(UNNAMED, "$1" + fn + "('$2')")
+		.replace(NAMED, function (x, y, z, base, req, dep) {
+			return (y || '') + generate(req ? req.split(',') : [], dep, base, fn);
 		});
 }
