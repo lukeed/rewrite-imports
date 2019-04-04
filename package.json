@@ -17,6 +17,7 @@
   },
   "scripts": {
     "build": "bundt",
+    "pretest": "npm run build",
     "test": "tape test/*.js | tap-spec"
   },
   "files": [

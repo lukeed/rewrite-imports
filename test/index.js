@@ -1,7 +1,7 @@
 'use strict';
 
 const test = require('tape');
-const fn = require('../src');
+const fn = require('../dist/rewrite');
 
 [
 	// Single quotes
