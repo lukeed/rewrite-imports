@@ -3,8 +3,9 @@
   "version": "2.0.1",
   "repository": "lukeed/rewrite-imports",
   "description": "Rewrite `import` statements as `require()`s; via RegExp",
-  "browser": "dist/rewrite-imports.es5.js",
-  "main": "dist/rewrite-imports.js",
+  "module": "dist/rewrite.mjs",
+  "unpkg": "dist/rewrite.min.js",
+  "main": "dist/rewrite.js",
   "license": "MIT",
   "author": {
     "name": "Luke Edwards",
