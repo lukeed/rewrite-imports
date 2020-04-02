@@ -9,10 +9,10 @@ function destruct(keys, target) {
 	return 'const { ' + out.join(', ') + ' } = ' + target + ';';
 }
 
-function generate(keys, dep, base, fn) {
+function generate(keys, dep, all, base, fn) {
 	dep = fn + "('" + dep + "')";
 	if (keys.length && !base) return destruct(keys, dep);
-	return 'const ' + base + ' = ' + dep + ';' + (keys.length ? '\n' + destruct(keys, base) : '');
+	return 'const ' + base + ' = ' + (dep + (all ? '' : '.default')) + ';' + (keys.length ? '\n' + destruct(keys, dep) : '');
 }
 
 export default function (str, fn) {
@@ -20,6 +20,6 @@ export default function (str, fn) {
 	return str
 		.replace(UNNAMED, "$1" + fn + "('$2')")
 		.replace(NAMED, function (x, y, z, base, req, dep) {
-			return (y || '') + generate(req ? req.split(',') : [], dep, base, fn);
+			return (y || '') + generate(req ? req.split(',') : [], dep, z, base, fn);
 		});
 }
