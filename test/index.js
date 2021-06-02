@@ -254,6 +254,24 @@ const { foo:bar } = helpers;`
 		`import { dimport } from 'dimport'; import './foo';`,
 		`const { dimport } = require('dimport'); require('./foo');`,
 	],
+
+	// Non-alphanum identifier
+	[
+		`import * as $ from "foobar";`,
+		`const $ = require('foobar');`
+	],
+	[
+		`import * as $ from "foobar";import * as _ from 'baz';`,
+		`const $ = require('foobar');const _ = require('baz');`
+	],
+	[
+		`import foo1 from 'foo';import { foo2, _lol } from 'bar';`,
+		`const foo1 = require('foo');const { foo2, _lol } = require('bar');`
+	],
+	[
+		`import $foo from 'foo'\nimport { $baz1, $01 } from 'baz'`,
+		`const $foo = require('foo');\nconst { $baz1, $01 } = require('baz');`
+	],
 ].forEach(arr => {
 	let code = arr[0];
 	let expected = arr[1];
