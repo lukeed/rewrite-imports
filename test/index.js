@@ -48,6 +48,28 @@ const fn = require('../dist/rewrite');
 		`const foo = require('../foo/bar');`
 	],
 
+	// Template quotes
+	[
+		"import foo from `foo`",
+		"const foo = require('foo');"
+	],
+	[
+		"import foo from `foo`;",
+		"const foo = require('foo');"
+	],
+	[
+		"import foo from `./foo`",
+		"const foo = require('./foo');"
+	],
+	[
+		"import foo from `../foo/bar`",
+		"const foo = require('../foo/bar');"
+	],
+	[
+		"import foo from `../foo/bar`;",
+		"const foo = require('../foo/bar');"
+	],
+
 	// Partial Imports
 	[
 		`import { foo, bar } from 'baz'`,
@@ -56,6 +78,14 @@ const fn = require('../dist/rewrite');
 	[
 		`import { foo, bar } from '../baz'`,
 		`const { foo, bar } = require('../baz');`
+	],
+	[
+		"import { foo, bar } from `baz`",
+		"const { foo, bar } = require('baz');"
+	],
+	[
+		"import { foo, bar } from `../baz`",
+		"const { foo, bar } = require('../baz');"
 	],
 
 	// Mixed Imports
@@ -126,6 +156,14 @@ const { foo:bar, default:main } = baz;`
 	[
 		`import './foo';import 'bar';`,
 		`require('./foo');require('bar');`
+	],
+	[
+		"import `./foo`;",
+		"require('./foo');"
+	],
+	[
+		"import `./foo`;import `bar`;",
+		"require('./foo');require('bar');"
 	],
 
 	// Multi-line

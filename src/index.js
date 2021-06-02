@@ -1,7 +1,7 @@
 'use strict';
 
-var UNNAMED = /(^|;|\s+)import\s*['"]([^'"]+)['"](?=($|;|\s))/gi;
-var NAMED = /(^|[;\s]+)?import\s*(\*\s*as)?\s*([a-z$_][a-z0-9_$]*)?\s*,?\s*(?:\{([\s\S]*?)\})?\s*from\s*['"]([^'"]+)['"];?/gi;
+var UNNAMED = /(^|;|\s+)import\s*['"`]([^'"`]+)['"`](?=($|;|\s))/gi;
+var NAMED = /(^|[;\s]+)?import\s*(\*\s*as)?\s*([a-z$_][a-z0-9_$]*)?\s*,?\s*(?:\{([\s\S]*?)\})?\s*from\s*['"`]([^'"`]+)['"`];?/gi;
 
 function destruct(keys, target) {
 	var out=[];
