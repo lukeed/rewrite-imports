@@ -11,7 +11,7 @@ function generate(keys, dep, base) {
 	return 'const ' + base + ' = ' + dep + (keys.length ? ';\n' + destruct(keys, base) : '');
 }
 
-export default function (str, fn) {
+export function rewrite(str, fn) {
 	fn = fn || 'require';
 	return str.replace(/(^|;\s*|\r?\n+)import\s*((?:\*\s*as)?\s*([a-z$_][\w$]*)?\s*,?\s*(?:{([\s\S]*?)})?)?\s*(from)?\s*(['"`][^'"`]+['"`])(?=;?)(?=([^"'`]*["'`][^"'`]*["'`])*[^"'`]*$)/gi, function (raw, ws, _, base, req, fro, dep) {
 		dep = fn + '(' + dep + ')';

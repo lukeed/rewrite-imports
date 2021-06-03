@@ -35,21 +35,21 @@ $ npm install --save rewrite-imports
 ## Usage
 
 ```js
-const rImports = require('rewrite-imports');
+const { rewrite } = require('rewrite-imports');
 
-rImports(`import foo from '../bar'`);
+rewrite(`import foo from '../bar'`);
 //=> const foo = require('../bar');
 
-rImports(`import { foo } from 'bar'`);
+rewrite(`import { foo } from 'bar'`);
 //=> const { foo } = require('bar');
 
-rImports(`import * as path from 'path';`);
+rewrite(`import * as path from 'path';`);
 //=> const path = require('path');
 
-rImports(`import { foo as bar, baz as bat, lol } from 'quz';`);
+rewrite(`import { foo as bar, baz as bat, lol } from 'quz';`);
 //=> const { foo:bar, baz:bat, lol } = require('quz');
 
-rImports(`import foobar, { foo as FOO, bar } from 'foobar';`);
+rewrite(`import foobar, { foo as FOO, bar } from 'foobar';`);
 //=> const foobar = require('foobar');
 //=> const { foo:FOO, bar } = foobar;
 ```
@@ -57,7 +57,7 @@ rImports(`import foobar, { foo as FOO, bar } from 'foobar';`);
 
 ## API
 
-### rImports(input, fn)
+### rewrite(input, fn)
 
 #### input
 Type: `String`

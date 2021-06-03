@@ -1,6 +1,6 @@
 {
-  "name": "rewrite-imports",
   "version": "2.0.3",
+  "name": "rewrite-imports",
   "repository": "lukeed/rewrite-imports",
   "description": "Rewrite `import` statements as `require()`s; via RegExp",
   "module": "dist/rewrite.mjs",

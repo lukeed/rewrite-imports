@@ -1,1 +1,1 @@
-export default function (source: string, require?: string): string;
+export function rewrite(source: string, require?: string): string;

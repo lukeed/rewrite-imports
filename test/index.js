@@ -1,7 +1,7 @@
 'use strict';
 
 const test = require('tape');
-const fn = require('../dist/rewrite');
+const { rewrite } = require('../dist/rewrite');
 
 [
 	// Single quotes
@@ -336,7 +336,7 @@ const fn = require('../dist/rewrite');
 	let extra = arr[2];
 
 	test(code, t => {
-		const result = fn(code, extra);
+		const result = rewrite(code, extra);
 		t.doesNotThrow(() => new Function(result), SyntaxError);
 		t.is(result, expected);
 		t.end();
