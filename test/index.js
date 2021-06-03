@@ -293,6 +293,32 @@ const { foo:bar } = helpers;`
 		`const { dimport } = require('dimport'); require('./foo');`,
 	],
 
+	// Within a string
+	[
+		`var text = "import { dimport } from 'dimport'; import './foo';";`,
+		`var text = "import { dimport } from 'dimport'; import './foo';";`,
+	],
+	[
+		"var text = `import { dimport } from 'dimport'; import './foo';`;",
+		"var text = `import { dimport } from 'dimport'; import './foo';`;",
+	],
+	[
+		'var text = `import { dimport } from "dimport"; import "./foo";`',
+		'var text = `import { dimport } from "dimport"; import "./foo";`',
+	],
+	[
+		`var text = "import foo from 'foo'; import'./bar'"`,
+		`var text = "import foo from 'foo'; import'./bar'"`,
+	],
+	[
+		"var text=`import foo from 'foo'; import'./bar'`",
+		"var text=`import foo from 'foo'; import'./bar'`",
+	],
+	[
+		"var text=`import{foo}from'foo';import bar,{baz}from'./bar'`",
+		"var text=`import{foo}from'foo';import bar,{baz}from'./bar'`",
+	],
+
 	// Non-alphanum identifier
 	[
 		`import * as $ from "foobar";`,
