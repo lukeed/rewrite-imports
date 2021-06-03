@@ -1,7 +1,7 @@
 'use strict';
 
 const test = require('tape');
-const { rewrite } = require('../dist/rewrite');
+const { rewrite } = require('../dist');
 
 [
 	// Single quotes

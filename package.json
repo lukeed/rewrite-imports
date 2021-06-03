@@ -3,9 +3,9 @@
   "name": "rewrite-imports",
   "repository": "lukeed/rewrite-imports",
   "description": "Rewrite `import` statements as `require()`s; via RegExp",
-  "module": "dist/rewrite.mjs",
-  "unpkg": "dist/rewrite.min.js",
-  "main": "dist/rewrite.js",
+  "module": "dist/index.mjs",
+  "unpkg": "dist/index.min.js",
+  "main": "dist/index.js",
   "types": "index.d.ts",
   "license": "MIT",
   "author": {
@@ -16,15 +16,22 @@
   "engines": {
     "node": ">=6"
   },
-  "scripts": {
-    "build": "bundt",
-    "pretest": "npm run build",
-    "test": "tape test/*.js | tap-spec"
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "*.d.ts",
     "dist"
   ],
+  "scripts": {
+    "build": "bundt",
+    "pretest": "npm run build",
+    "test": "tape test/*.js | tap-spec"
+  },
   "keywords": [
     "regex",
     "rewrite",

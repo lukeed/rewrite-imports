@@ -35,6 +35,8 @@ $ npm install --save rewrite-imports
 ## Usage
 
 ```js
+import { rewrite } from 'rewrite-imports';
+// or
 const { rewrite } = require('rewrite-imports');
 
 rewrite(`import foo from '../bar'`);
