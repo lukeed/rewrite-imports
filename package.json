@@ -6,6 +6,7 @@
   "module": "dist/rewrite.mjs",
   "unpkg": "dist/rewrite.min.js",
   "main": "dist/rewrite.js",
+  "types": "index.d.ts",
   "license": "MIT",
   "author": {
     "name": "Luke Edwards",
@@ -21,6 +22,7 @@
     "test": "tape test/*.js | tap-spec"
   },
   "files": [
+    "*.d.ts",
     "dist"
   ],
   "keywords": [
