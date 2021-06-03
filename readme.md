@@ -1,4 +1,4 @@
-# rewrite-imports [![Build Status](https://travis-ci.org/lukeed/rewrite-imports.svg?branch=master)](https://travis-ci.org/lukeed/rewrite-imports)
+# rewrite-imports [![CI](https://github.com/lukeed/rewrite-imports/actions/workflows/ci.yml/badge.svg)](https://github.com/lukeed/rewrite-imports/actions/workflows/ci.yml)
 
 Transforms various `import` statements into `require()` calls, using regular expressions.
 
