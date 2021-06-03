@@ -7,7 +7,7 @@ const fn = require('../dist/rewrite');
 	// Single quotes
 	[
 		`import foo from 'foo'`,
-		`const foo = require('foo');`
+		`const foo = require('foo')`
 	],
 	[
 		`import foo from 'foo';`,
@@ -15,11 +15,11 @@ const fn = require('../dist/rewrite');
 	],
 	[
 		`import foo from './foo'`,
-		`const foo = require('./foo');`
+		`const foo = require('./foo')`
 	],
 	[
 		`import foo from '../foo/bar'`,
-		`const foo = require('../foo/bar');`
+		`const foo = require('../foo/bar')`
 	],
 	[
 		`import foo from '../foo/bar';`,
@@ -29,119 +29,111 @@ const fn = require('../dist/rewrite');
 	// Double quotes
 	[
 		`import foo from "foo"`,
-		`const foo = require('foo');`
+		`const foo = require("foo")`
 	],
 	[
 		`import foo from "foo";`,
-		`const foo = require('foo');`
+		`const foo = require("foo");`
 	],
 	[
 		`import foo from "./foo"`,
-		`const foo = require('./foo');`
+		`const foo = require("./foo")`
 	],
 	[
 		`import foo from "../foo/bar"`,
-		`const foo = require('../foo/bar');`
+		`const foo = require("../foo/bar")`
 	],
 	[
 		`import foo from "../foo/bar";`,
-		`const foo = require('../foo/bar');`
+		`const foo = require("../foo/bar");`
 	],
 
 	// Template quotes
 	[
 		"import foo from `foo`",
-		"const foo = require('foo');"
+		"const foo = require(`foo`)"
 	],
 	[
 		"import foo from `foo`;",
-		"const foo = require('foo');"
+		"const foo = require(`foo`);"
 	],
 	[
 		"import foo from `./foo`",
-		"const foo = require('./foo');"
+		"const foo = require(`./foo`)"
 	],
 	[
 		"import foo from `../foo/bar`",
-		"const foo = require('../foo/bar');"
+		"const foo = require(`../foo/bar`)"
 	],
 	[
 		"import foo from `../foo/bar`;",
-		"const foo = require('../foo/bar');"
+		"const foo = require(`../foo/bar`);"
 	],
 
 	// Partial Imports
 	[
 		`import { foo, bar } from 'baz'`,
-		`const { foo, bar } = require('baz');`
+		`const { foo, bar } = require('baz')`
 	],
 	[
 		`import { foo, bar } from '../baz'`,
-		`const { foo, bar } = require('../baz');`
+		`const { foo, bar } = require('../baz')`
 	],
 	[
 		"import { foo, bar } from `baz`",
-		"const { foo, bar } = require('baz');"
+		"const { foo, bar } = require(`baz`)"
 	],
 	[
 		"import { foo, bar } from `../baz`",
-		"const { foo, bar } = require('../baz');"
+		"const { foo, bar } = require(`../baz`)"
 	],
 
 	// Mixed Imports
 	[
 		`import baz, { foo, bar } from 'baz'`,
-		`const baz = require('baz');
-const { foo, bar } = baz;`
+		`const baz = require('baz');\nconst { foo, bar } = baz`
 	],
 	[
 		`import baz, { foo, bar } from '../baz'`,
-		`const baz = require('../baz');
-const { foo, bar } = baz;`
+		`const baz = require('../baz');\nconst { foo, bar } = baz`
 	],
 	[
 		`import baz, { foo } from 'baz';import bat, { foo as bar } from 'bat';`,
-		`const baz = require('baz');
-const { foo } = baz;const bat = require('bat');
-const { foo:bar } = bat;`
+		`const baz = require('baz');\nconst { foo } = baz;const bat = require('bat');\nconst { foo:bar } = bat;`
 	],
 	[
 		`import baz, { foo as bar, bar as bat } from 'baz'`,
-		`const baz = require('baz');
-const { foo:bar, bar:bat } = baz;`
+		`const baz = require('baz');\nconst { foo:bar, bar:bat } = baz`
 	],
 	[
 		`import baz, {foo as bar} from 'baz';import quz, {foo as bat} from 'quz';`,
-		`const baz = require('baz');
-const { foo:bar } = baz;const quz = require('quz');
-const { foo:bat } = quz;`
+		`const baz = require('baz');\nconst { foo:bar } = baz;const quz = require('quz');\nconst { foo:bat } = quz;`
 	],
 
 	// Aliases
 	[
 		`import { default as main } from 'foo'`,
-		`const { default:main } = require('foo');`
+		`const { default:main } = require('foo')`
 	],
 	[
 		`import { foo as bar } from 'baz'`,
-		`const { foo:bar } = require('baz');`
+		`const { foo:bar } = require('baz')`
 	],
 	[
 		`import { bar, default as main } from '../foo'`,
-		`const { bar, default:main } = require('../foo');`
+		`const { bar, default:main } = require('../foo')`
 	],
 	[
 		`import { foo as bar, default as main } from '../foo'`,
-		`const { foo:bar, default:main } = require('../foo');`
+		`const { foo:bar, default:main } = require('../foo')`
 	],
 	[
 		`import baz, { foo as bar, default as main } from '../foo'`,
-		`const baz = require('../foo');
-const { foo:bar, default:main } = baz;`
+		`const baz = require('../foo');\nconst { foo:bar, default:main } = baz`
 	],
 	[
 		`import * as foo from '../foo'`,
-		`const foo = require('../foo');`
+		`const foo = require('../foo')`
 	],
 
 	// Raw imports
@@ -159,28 +151,20 @@ const { foo:bar, default:main } = baz;`
 	],
 	[
 		"import `./foo`;",
-		"require('./foo');"
+		"require(`./foo`);"
 	],
 	[
 		"import `./foo`;import `bar`;",
-		"require('./foo');require('bar');"
+		"require(`./foo`);require(`bar`);"
 	],
 
 	// Multi-line
 	[
-		`import {
-	foo,
-	bar,
-	bat as baz
-} from 'baz'`,
-		`const { foo, bar, bat:baz } = require('baz');`
+		`import {\n\tfoo,\n\tbar,\n\tbat as baz\n} from 'baz'`,
+		`const { foo, bar, bat:baz } = require('baz')`
 	],
 	[
-		`import {
-	foo,
-	bar,
-	bat as baz
-} from '../baz'`,
+		`import {\n\tfoo,\n\tbar,\n\tbat as baz\n} from '../baz';`,
 		`const { foo, bar, bat:baz } = require('../baz');`
 	],
 
@@ -191,7 +175,7 @@ const { foo:bar, default:main } = baz;`
 	],
 	[
 		`import foo from 'foo'\nimport { baz1, baz2 } from 'baz'`,
-		`const foo = require('foo');\nconst { baz1, baz2 } = require('baz');`
+		`const foo = require('foo')\nconst { baz1, baz2 } = require('baz')`
 	],
 	[
 		`import 'bar';import './foo';`,
@@ -209,9 +193,7 @@ const { foo:bar, default:main } = baz;`
 	],
 	[
 		`import util, { promisify } from 'util';import helpers, { foo as bar } from './util';`,
-		`const util = require('util');
-const { promisify } = util;const helpers = require('./util');
-const { foo:bar } = helpers;`
+		`const util = require('util');\nconst { promisify } = util;const helpers = require('./util');\nconst { foo:bar } = helpers;`
 	],
 	[
 		`import { h } from 'preact';import { Component } from 'preact';`,
@@ -229,37 +211,37 @@ const { foo:bar } = helpers;`
 	],
 	[
 		`import foo from'foo'`,
-		`const foo = require('foo');`
+		`const foo = require('foo')`
 	],
 	[
 		`import{foo,bar}from'baz'`,
-		`const { foo, bar } = require('baz');`
+		`const { foo, bar } = require('baz')`
 	],
 	[
-		`import{foo,bar}from'../baz'`,
-		`const { foo, bar } = require('../baz');`
+		`import{foo,bar}from'../baz';;;`,
+		`const { foo, bar } = require('../baz');;;`
 	],
 	[
 		`import{foo,bar as baz}from'../baz'`,
-		`const { foo, bar:baz } = require('../baz');`
+		`const { foo, bar:baz } = require('../baz')`
 	],
 
 	// Dashes
 	[
 		`import foo from "foo-bar"`,
-		`const foo = require('foo-bar');`
+		`const foo = require("foo-bar")`
 	],
 	[
-		`import {foo, bar} from 'foo-bar'`,
+		`import {foo, bar} from 'foo-bar';`,
 		`const { foo, bar } = require('foo-bar');`
 	],
 	[
 		`import baz, {foo, bar} from 'foo-bar'`,
-		`const baz = require('foo-bar');\nconst { foo, bar } = baz;`
+		`const baz = require('foo-bar');\nconst { foo, bar } = baz`
 	],
 	[
 		`import a, {b} from 'c'`,
-		`const a = pizza('c');\nconst { b } = a;`,
+		`const a = pizza('c');\nconst { b } = a`,
 		'pizza'
 	],
 
@@ -318,15 +300,27 @@ const { foo:bar } = helpers;`
 		"var text=`import{foo}from'foo';import bar,{baz}from'./bar'`",
 		"var text=`import{foo}from'foo';import bar,{baz}from'./bar'`",
 	],
+	[
+		"var text=`\n\timport{foo}from'foo';\n\timport bar,{baz}from'./bar';\n`;",
+		"var text=`\n\timport{foo}from'foo';\n\timport bar,{baz}from'./bar';\n`;",
+	],
+	[
+		`var text='\\n\\timport{foo}from"foo";\\n\\timport bar,{baz}from"./bar";';`,
+		`var text='\\n\\timport{foo}from"foo";\\n\\timport bar,{baz}from"./bar";';`,
+	],
+	[
+		'var text="import \'foo\';import`./bar`\\nimport\'baz\';";',
+		'var text="import \'foo\';import`./bar`\\nimport\'baz\';";',
+	],
 
 	// Non-alphanum identifier
 	[
 		`import * as $ from "foobar";`,
-		`const $ = require('foobar');`
+		`const $ = require("foobar");`
 	],
 	[
 		`import * as $ from "foobar";import * as _ from 'baz';`,
-		`const $ = require('foobar');const _ = require('baz');`
+		`const $ = require("foobar");const _ = require('baz');`
 	],
 	[
 		`import foo1 from 'foo';import { foo2, _lol } from 'bar';`,
@@ -334,7 +328,7 @@ const { foo:bar } = helpers;`
 	],
 	[
 		`import $foo from 'foo'\nimport { $baz1, $01 } from 'baz'`,
-		`const $foo = require('foo');\nconst { $baz1, $01 } = require('baz');`
+		`const $foo = require('foo')\nconst { $baz1, $01 } = require('baz')`
 	],
 ].forEach(arr => {
 	let code = arr[0];
