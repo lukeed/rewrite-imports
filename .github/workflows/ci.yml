@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        nodejs: [6, 8]
+        nodejs: [8, 10, 12]
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2
@@ -46,7 +46,7 @@ jobs:
         npm install -g c8
 
     - name: Test w/ Coverage
-      run: c8 --include=dist npm test
+      run: c8 --include=src npm test
 
     - name: Report
       run: |

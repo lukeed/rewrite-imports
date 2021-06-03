@@ -29,8 +29,7 @@
   ],
   "scripts": {
     "build": "bundt",
-    "pretest": "npm run build",
-    "test": "tape test/*.js | tap-spec"
+    "test": "uvu -r esm test"
   },
   "keywords": [
     "regex",
@@ -42,7 +41,7 @@
   ],
   "devDependencies": {
     "bundt": "^0.3.0",
-    "tap-spec": "^4.1.1",
-    "tape": "^4.7.0"
+    "esm": "3.2.25",
+    "uvu": "0.5.1"
   }
 }

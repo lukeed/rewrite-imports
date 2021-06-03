@@ -1,5 +1,3 @@
-'use strict';
-
 function destruct(keys, target) {
 	var out=[];
 	while (keys.length) out.push(keys.shift().trim().replace(/ as /g, ':'));
