@@ -1,5 +1,5 @@
 {
-  "version": "2.0.3",
+  "version": "3.0.0",
   "name": "rewrite-imports",
   "repository": "lukeed/rewrite-imports",
   "description": "A tiny (349B) utility to rewrite `import` statements as `require()`s; via RegExp",
