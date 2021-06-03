@@ -1,6 +1,6 @@
 # rewrite-imports [![CI](https://github.com/lukeed/rewrite-imports/actions/workflows/ci.yml/badge.svg)](https://github.com/lukeed/rewrite-imports/actions/workflows/ci.yml)
 
-Transforms various `import` statements into `require()` calls, using regular expressions.
+A tiny (349B) utility to transform various `import` statements into `require()` calls, using regular expressions.
 
 > ***Looking for something _more_ backwards compatible?*** <br>
 > Check out [`v1.4.0`](https://github.com/lukeed/rewrite-imports/tree/v1.4.0) which does not rely on destructured assignment!

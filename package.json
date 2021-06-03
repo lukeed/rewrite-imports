@@ -2,7 +2,7 @@
   "version": "2.0.3",
   "name": "rewrite-imports",
   "repository": "lukeed/rewrite-imports",
-  "description": "Rewrite `import` statements as `require()`s; via RegExp",
+  "description": "A tiny (349B) utility to rewrite `import` statements as `require()`s; via RegExp",
   "module": "dist/index.mjs",
   "unpkg": "dist/index.min.js",
   "main": "dist/index.js",
